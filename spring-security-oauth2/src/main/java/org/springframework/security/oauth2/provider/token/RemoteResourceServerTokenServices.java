@@ -54,7 +54,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Vidya Valmikinathan
  */
-public class RemoteTokenServices implements ResourceServerTokenServices, InitializingBean {
+public class RemoteResourceServerTokenServices implements ResourceServerTokenServices, InitializingBean {
 
     protected final Log logger = LogFactory.getLog(getClass());
     private RestOperations restTemplate = new RestTemplate();
@@ -84,6 +84,12 @@ public class RemoteTokenServices implements ResourceServerTokenServices, Initial
         Assert.state(clientId != null && clientSecret != null, "Supply client credentials to use with check_token endpoint");
         Assert.state(checkTokenEndpointUrl != null, "Supply an end-point to use for validating Oauth2 token");
         basicAuthHeader = getAuthorizationHeader(clientId, clientSecret);
+    }
+
+    public RemoteResourceServerTokenServices(String clientId, String clientSecret, String checkTokenEndpointUrl) {
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.checkTokenEndpointUrl = checkTokenEndpointUrl;
     }
 
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException {
