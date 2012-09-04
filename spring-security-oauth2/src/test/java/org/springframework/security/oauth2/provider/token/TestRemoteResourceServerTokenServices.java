@@ -18,13 +18,11 @@ import java.util.Map;
  */
 public class TestRemoteTokenServices extends TestCase {
 
-    RemoteTokenServices tokenServices;
+    RemoteResourceServerTokenServices tokenServices;
     RestTemplate restTemplate = Mockito.mock(RestTemplate.class);
 
     public void setUp(Map<String, Object> token) {
-        tokenServices = Mockito.spy(new RemoteTokenServices());
-        tokenServices.setClientId("client1");
-        tokenServices.setClientSecret("secret");
+        tokenServices = Mockito.spy(new RemoteResourceServerTokenServices("client1", "secret", "someurl"));
 
         Mockito.doReturn(token).when(tokenServices).validateToken("token");
     }
